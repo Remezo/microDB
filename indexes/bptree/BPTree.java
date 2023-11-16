@@ -1,8 +1,13 @@
 package edu.davidson.csc353.microdb.indexes.bptree;
 
+
+
 import java.nio.ByteBuffer;
 
 import java.util.function.Function;
+
+import edu.davidson.csc353.microdb.indexes.bptree.BPNode;
+import edu.davidson.csc353.microdb.indexes.bptree.BPNodeFactory;
 
 /**
  * B+Tree implementation.
@@ -63,10 +68,14 @@ public class BPTree<K extends Comparable<K>, V> {
 	 */
 	public V get(K key) {
 		// TODO ...
-		
+		BPNode<K, V> node = find(nodeFactory.getNode(rootNumber), key);
 
-		if (nodeFactory.getNode(key)){
-			return nodeFactory.getNode(key) }
+		if (node != null) {
+			int index = node.keys.indexOf(key);
+			if (index != -1) {
+				return node.values.get(index);
+			}
+		}
 		return null;
 	}
 
@@ -83,8 +92,15 @@ public class BPTree<K extends Comparable<K>, V> {
 			return node;
 		}
 
-		// TODO ...
-		return null;
+		int index = 0;
+		while (index < node.keys.size() && less(node.keys.get(index), key)) {
+			index++;
+		}
+
+		int childNumber = node.getChild(index);
+		BPNode<K, V> nextNode = nodeFactory.getNode(childNumber);
+
+		return find(nextNode, key);
 	}
 
 	/**
@@ -129,6 +145,7 @@ public class BPTree<K extends Comparable<K>, V> {
 	 * @param arguments None.
 	 */
 	public static void main(String[] arguments) {
+		System.out.println(" Start");
 		BPTree<String, Integer> testIndex = new BPTree<>(k -> k, s -> Integer.parseInt(s));
 
 		testIndex.insert("i", 9);
