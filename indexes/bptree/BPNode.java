@@ -170,8 +170,11 @@ public class BPNode<K extends Comparable<K>, V> {
 		result.left = this;
 		result.right = nodeFactory.create(true);
 
-		// TODO ...
+		result.right.insertValue(result.left.keys.get(SIZE), result.left.values.get(SIZE));
 
+		result.dividerKey = result.right.keys.get(0);
+
+		result.left.next = result.right;
 		return result;
 	}
 
