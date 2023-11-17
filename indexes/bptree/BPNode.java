@@ -199,8 +199,16 @@ public class BPNode<K extends Comparable<K>, V> {
 
 		result.left = this;
 		result.right = nodeFactory.create(false);
+		int indexdiv= (SIZE+1)/2;
 
-		result.dividerKey = result.right.keys.get(0);
+		for (int i = indexdiv+1; i < SIZE; i++) {
+			result.right.insertValue(result.left.keys.get(i), result.left.values.get(i));
+			result.left.keys.remove(i);
+		}
+
+
+		result.dividerKey = result.left.keys.get(indexdiv);
+		result.left.keys.remove(indexdiv);
 
 		result.parent.insertOnParent(result.left, result.dividerKey, result.right);
 
