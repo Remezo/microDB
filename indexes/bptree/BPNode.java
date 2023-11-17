@@ -173,6 +173,9 @@ public class BPNode<K extends Comparable<K>, V> {
 
 		for (int i = (SIZE+1)/2; i < SIZE; i++) {
 			result.right.insertValue(result.left.keys.get(i), result.left.values.get(i));
+		}
+
+		for (int i = (SIZE+1)/2; i < SIZE; i++) {
 			result.left.keys.remove(i);
 		}
 
@@ -203,11 +206,15 @@ public class BPNode<K extends Comparable<K>, V> {
 
 		for (int i = indexdiv+1; i < SIZE; i++) {
 			result.right.insertValue(result.left.keys.get(i), result.left.values.get(i));
-			result.left.keys.remove(i);
 		}
 
 
 		result.dividerKey = result.left.keys.get(indexdiv);
+
+		for (int i = indexdiv+1; i < SIZE; i++) {
+			result.left.keys.remove(i);
+		}
+		
 		result.left.keys.remove(indexdiv);
 
 		result.parent.insertOnParent(result.left, result.dividerKey, result.right);
