@@ -171,11 +171,11 @@ public class BPNode<K extends Comparable<K>, V> {
 		result.right = nodeFactory.create(true);
 
 
-		for (int i = (SIZE+1)/2; i < SIZE; i++) {
+		for (int i = (SIZE)/2; i < SIZE; i++) {
 			result.right.insertValue(result.left.keys.get(i), result.left.values.get(i));
 		}
 
-		for (int i = (SIZE+1)/2; i < SIZE; i++) {
+		for (int i = (SIZE)/2; i < SIZE; i++) {
 			result.left.keys.remove(i);
 		}
 
