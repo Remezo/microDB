@@ -45,6 +45,10 @@ public class BPTree<K extends Comparable<K>, V> {
 		
 		insertPlace.insertValue(key, value);
 		// Need to call insertOnParent after performing a leaf node split
+
+		if (insertPlace.length > 5 ){
+			insertPlace.splitLeaf(nodeFactory);
+		}
 	}
 
 	/**
